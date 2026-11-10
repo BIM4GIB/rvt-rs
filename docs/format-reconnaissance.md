@@ -2585,3 +2585,32 @@ Revit's export writes an opening for a wall with an edited elevation profile onl
 ## Addendum — Rectangular family revolutions (RE-391, #156, 2026-11-09)
 
 Three authored Revit 2020 families establish the saved `RevolutionCurveData.m_axis` marker, sketch membership, start/end angle parameters and direct family-coordinate profile placement. A bounded proof rebuilds all three exclusively from probe fields; all three pass the native IFC4 Design Transfer comparison (maximum tested distance 0.001521 mm). The initial full-ring mismatch was an export-settings problem: six controlled exports show that explicit `IFC4DTV` preserves an advanced BRep, while generic IFC4 remains faceted even with maximum detail and a Fine 3D view. Reconstruction and tolerances are unchanged. No production revolution reader or export change is added. [RE-391](../reports/element-framing/RE-391-family-rectangular-revolutions.md); `probe_family_revolutions` and `tools/oracle/runner/revolutions/`. The cleaned, revalidated synthetic files and native IFC references are [available under MIT](https://github.com/BIM4GIB/rvt-rs/releases/download/fixtures-revolutions-2020-v1/rectangular-revolutions-revit2020-v1.zip); the offline replay needs no Revit installation.
+
+
+## Addendum — Circular family revolutions (RE-392, #156, 2026-11-10)
+
+Three authored Revit 2020 files confirm GArc centre/radius/basis/limits in family
+coordinates for two-semicircle profiles. CurveElemDriver.m_pCrv selects the
+profile arc; the same record's arc-centre GLine is auxiliary. All three byte
+reconstructions pass independent native-face/projection and volume checks
+(maximum sampled gap 0.011423 mm). Native IFC results remain separate: the full
+torus passes, the partial reference differs, and the tilted reference times out.
+[RE-392](../reports/element-framing/RE-392-family-circular-revolutions.md).
+
+## Addendum — Shared line/arc reader (RE-393, #156, 2026-11-10)
+
+Extrusions and revolutions share driven sketch-curve selection and the existing
+GLine/GArc decoder. The bounded revolution reader returns a radial/axial
+profile, directed axis, angles and closed mesh. All six fixtures pass native
+comparisons and 22 refusal controls; all 30 decoded extrusions in the 14-file
+sample replay retain byte-identical probe results.
+[RE-393](../reports/element-framing/RE-393-shared-family-profile-reader.md).
+
+## Addendum — Analytic family revolution IFC (RE-394, #156, 2026-11-10)
+
+The default exporter writes a single visible positive standalone 2020 family
+revolution as an IfcRevolvedAreaSolid, preserving its line/arc profile, saved
+angular interval, axis and placement. All six fixture exports pass schema,
+topology, native geometry and default/fine OpenCascade import checks. The full
+torus is 9,051 bytes. Product typing, project instances and other releases gain
+no coverage. [RE-394](../reports/element-framing/RE-394-analytic-family-revolutions.md).
